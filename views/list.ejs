@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Todo App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <ul class="list-group">
+        <% for (var i = 0; i < posts.length; i++){ %>
+        <li class="list-group-item">
+          <p>글번호 : <%= posts[i]._id %></p>
+          <h4>할일 제목 : <%= posts[i].제목 %></h4>
+          <p>할일 마감날짜 : <%= posts[i].날짜 %> </p>
+          <button class="delete" data-id = "<%= posts[i]._id %>">삭제</button>
+        </li>
+        <% } %>
+      </ul>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script> 
+
+      <script>
+
+        $(".delete").click(function(e){
+          var postnum = e.target.dataset.id; //내가 누른 버튼에 숨겨진 data-id값을 가져오기 => e.target -> 내가 누른 요소, dataset.id -> 내가 누른 요소의 data id
+          var this_click = $(this); // this = 지금 이벤트 동작하는 곳
+          $.ajax({ //서버에 새로고침없이 /delete 경로로 DELETE 요청을 할것임
+          method : "DELETE",
+          url : "/delete",
+          data : {_id : postnum}
+          }).done(function(result){ //요청이 성공하면 이 함수를 실행
+            //페이지 강제로 새로고침하기
+            //삭제버튼을 누른 <li> 요소를 제거/안보이게
+            console.log("성공")
+            this_click.parent("li").fadeOut();
+
+          }).fail(function(xhr, textStatus, errorThrown){
+            console.log(xhr, textStatus, errorThrown); // textStatus = 응답코드, errorThown = 에러 메세지
+          })
+        })
+        
+      </script>
+    
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>
