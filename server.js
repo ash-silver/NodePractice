@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 app.set("view engine", 'ejs');
 
+app.use("/public", express.static("public")); //미들웨어라고 하는데, 요청 응답사이에 동작하는 Javascript 코드
+
 var db;
 MongoClient.connect("mongodb+srv://diger:0122@cluster0.xaj2m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", function(err, client){
     //DB 연결되면 할일
