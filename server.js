@@ -22,6 +22,9 @@ app.set("view engine", 'ejs');
 
 app.use("/public", express.static("public")); //미들웨어라고 하는데, 요청 응답사이에 동작하는 Javascript 코드
 
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
 var db;
 MongoClient.connect("mongodb+srv://diger:0122@cluster0.xaj2m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", function(err, client){
     //DB 연결되면 할일
@@ -33,13 +36,13 @@ MongoClient.connect("mongodb+srv://diger:0122@cluster0.xaj2m.mongodb.net/myFirst
     
 });
 
-app.get("/", function(req, res){
-    res.sendFile(__dirname + "/index.html")
-});
+// app.get("/", function(req, res){
+//     res.sendFile(__dirname + "index.html")
+// });
 
-app.get("/write", function(req, res){
-    res.sendFile(__dirname + "/write.html")
-});
+// app.get("/write", function(req, res){
+//     res.sendFile(__dirname + "/write.html")
+// });
 
 app.get("/list", function(req, res){
     // DB에 저장된 POST라는 Collection 데이터를 모두 꺼내오기
@@ -82,6 +85,40 @@ app.get("/detail/:num", function(req, res){ //detail/1 등 번호를 매겨서 �
         else{
             res.status(404);
             console.log("해당 페이지는 존재하지 않습니다.")
+        }
+    })
+})
+
+app.get("/", function(req, res){
+    res.render("index.ejs")
+})
+
+app.get("/index", function(req, res){
+    res.render("index.ejf")
+})
+
+app.get("/write", function(req, res){
+    res.render("write.ejs");
+})
+
+app.get("/edit/:num", function(req, res){
+    db.collection("post").findOne({_id : parseInt(req.params.num)}, function(err, result){
+        if(!err){
+            res.render("edit.ejs", { post : result})
+        }
+        else{
+            res.status(404);
+            console.log("해당 페이지는 존재 하지 않음");
+        }
+    })
+})
+
+app.put("edit", function(req, res){
+    // form에 담긴 제목, 날짜 데이터를 가지고
+    // db.collection 에 업데이트하기
+    db.collection("post").UpdateOne({_id : parseInt(req.body.id) }, { $set : { 제목: ??, 날짜: ?? } }, function(err, result){
+        if(!err){
+
         }
     })
 })
