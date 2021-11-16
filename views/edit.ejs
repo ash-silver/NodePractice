@@ -17,11 +17,11 @@
         <form action="/edit?_method=PUT" method="POST">
             <label for="formGroupExampleInput" class="form-label">할일</label>
             <input type="text" name="<%= post.id %>" style="display: none;">
-            <input value=<%= post.제목 %> type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="Example input placeholder">
+            <input value="<%= post.제목 %>" type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="Example input placeholder">
       </div>
       <div class="mb-3">
             <label for="formGroupExampleInput2" class="form-label">Due date</label>
-            <input value=<%= post.날짜 %> type="text" class="form-control" name="date" id="formGroupExampleInput2" placeholder="Another input placeholder">
+            <input value="<%= post.날짜 %>" type="text" class="form-control" name="date" id="formGroupExampleInput2" placeholder="Another input placeholder">
       </div>
       <button type="submit" class="btn btn-danger">수정완료</button>
     </form>

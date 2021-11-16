@@ -116,12 +116,13 @@ app.get("/edit/:num", function(req, res){
 app.put("edit", function(req, res){
     // form에 담긴 제목, 날짜 데이터를 가지고
     // db.collection 에 업데이트하기
-    db.collection("post").UpdateOne({_id : parseInt(req.body.id) }, { $set : { 제목: ??, 날짜: ?? } }, function(err, result){
+    db.collection("post").UpdateOne({_id : parseInt(req.body.id) }, { $set : { 제목: req.body.title, 날짜: req.body.date } }, function(err, result){
         if(!err){
-
+            console.log("수정완료")
         }
         else{
-            
+            res.status(404);
+            console.log("해당 페이지는 존재 하지 않음");
         }
     })
 })
