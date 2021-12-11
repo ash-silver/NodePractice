@@ -16,7 +16,7 @@
       <div class="mb-3">
         <form action="/edit?_method=PUT" method="POST">
             <label for="formGroupExampleInput" class="form-label">할일</label>
-            <input type="text" name="<%= post.id %>" style="display: none;">
+            <input type="text" value="<%= post._id %>" name="id" style="display: none;">
             <input value="<%= post.제목 %>" type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="Example input placeholder">
       </div>
       <div class="mb-3">

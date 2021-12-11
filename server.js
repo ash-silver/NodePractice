@@ -71,7 +71,7 @@ app.delete("/delete", function(req, res){
     parseInt(req.body._id); //형변환 parseInt
     db.collection("post").deleteOne({}, function(err, result){
         if(err) {return console.log(err);}
-        else{console.log("삭제완료");}
+        else {console.log("삭제완료");}
         res.status(200).send({ message : "성공" });
     })
 })
@@ -113,16 +113,11 @@ app.get("/edit/:num", function(req, res){
     })
 })
 
-app.put("edit", function(req, res){
-    // form에 담긴 제목, 날짜 데이터를 가지고
-    // db.collection 에 업데이트하기
-    db.collection("post").UpdateOne({_id : parseInt(req.body.id) }, { $set : { 제목: req.body.title, 날짜: req.body.date } }, function(err, result){
-        if(!err){
-            console.log("수정완료")
-        }
-        else{
-            res.status(404);
-            console.log("해당 페이지는 존재 하지 않음");
-        }
+app.put("/edit", function(req, res){
+    //폼에 담긴 제목 데이터, 날짜 데이터를 가지고 db.collection에다가 업데이트하기
+    //db.collection("post").updateOne({old}, {new}, function(err, res)
+    db.collection("post").updateOne({_id : parseInt(req.body.id) }, { $set : { 제목 : req.body.title, 날짜 : req.body.date }}, function(err, result) {
+        console.log("수정완룡");
+        res.redirect("/list");
     })
-})
+});
